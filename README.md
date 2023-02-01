@@ -45,7 +45,38 @@ const provider = new AnkrscanProvider('');
 ```
 Your provider instance will be your interface to the Ankr Advanced APIs whenever you want to fetch some data from them.
 
-## Step 3: Custom Hook for Token Holders Info
+## Step 3: Creating Token Holders Retrieval Function
+In this step, you will create a **getTokenHolders** function that accepts a contractAddress and returns a list of holders.
+
+You can utilize the `getTokenHolders` function provided by Ankr.js for this.
+
+**File:** `./utils.ts`
+```javascript
+import AnkrscanProvider from '@ankr.com/ankr.js';
+
+// Create an instance of the AnkrscanProvider 
+const provider = new AnkrscanProvider('');
+
+// Export a function that returns token holders information
+export const getTokenHolders = async (contractAddress: string) => {
+  // Call the getTokenHolders method
+  //pass the contract address and (optional) blockchain type
+  const { holders, holdersCount } = await provider.getTokenHolders({
+    contractAddress,
+    blockchain: 'eth',
+  });
+  
+  // Log the holders to the console
+  console.log({ holders });
+  
+  // Return the holders and holdersCount
+  return {
+    holders,
+    holdersCount,
+  };
+};
+  ```
+## Step 4: Custom Hook for Token Holders Info
 
 This code exports a custom hook named `useTokenHolders` that can be used in a React component to fetch token holders information for a given contract address. 
 
@@ -99,38 +130,6 @@ export const useTokenHolders = (contractAddress: string) => {
 ```
 
 
-
-## Step 4: Creating Token Holders Retrieval Function
-In this step, you will create a **getTokenHolders** function that accepts a contractAddress and returns a list of holders.
-
-You can utilize the `getTokenHolders` function provided by Ankr.js for this.
-
-**File:** `./utils.ts`
-```javascript
-import AnkrscanProvider from '@ankr.com/ankr.js';
-
-// Create an instance of the AnkrscanProvider 
-const provider = new AnkrscanProvider('');
-
-// Export a function that returns token holders information
-export const getTokenHolders = async (contractAddress: string) => {
-  // Call the getTokenHolders method
-  //pass the contract address and (optional) blockchain type
-  const { holders, holdersCount } = await provider.getTokenHolders({
-    contractAddress,
-    blockchain: 'eth',
-  });
-  
-  // Log the holders to the console
-  console.log({ holders });
-  
-  // Return the holders and holdersCount
-  return {
-    holders,
-    holdersCount,
-  };
-};
-  ```
   
   ## Step 5: Creating Contract Address Input and Displaying the Data
 You will now add an input to the UI that lets the user input any contract address they want and pass it to the getTokenHolders function.
