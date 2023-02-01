@@ -224,4 +224,7 @@ const Home: NextPage = () => {
 
 export default Home;
 ```
-
+## Step 6: Run the app!
+```
+yarn dev
+```
